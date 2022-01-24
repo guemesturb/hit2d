@@ -8,3 +8,4 @@ using namespace std;
 
 vector<double> createWaveLength(int, int);
 vector<double> linspace(int, int, int);
+vector<double> initialConditions();

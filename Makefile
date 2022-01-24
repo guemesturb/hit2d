@@ -1,4 +1,4 @@
-CC = g++
+CC = g++ -std=c++11
 CPU_SOURCES = $(wildcard src/*.cpp)
 CPU_OBJECTS = $(CPU_SOURCES:.cpp=.o)
 

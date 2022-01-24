@@ -8,4 +8,6 @@ using namespace std;
 
 vector<double> createWaveLength(int, int);
 vector<double> linspace(int, int, int);
-vector<double> initialConditions();
+vector<vector<double>> initialConditions();
+vector<vector<double>> taylorVortex(int, int, int, int);
+vector<vector<double>> sumMatrices(vector<vector<double>>, vector<vector<double>>);

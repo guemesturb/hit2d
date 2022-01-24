@@ -41,9 +41,17 @@ int main(int argc, char **argv) {
     vector<double> x = linspace(0, LX, NX + 1);
     vector<double> y = linspace(0, LY, NY + 1);
 
-    // for (size_t i = 0; i < x.size(); i++) {
-    //     cout << x[i] << "\n";
-    // }
+    // Initial conditions
+
+    vector<vector<double>> omghat = initialConditions();
+
+    for (size_t i = 0; i < omghat.size(); i++) {
+        for (size_t j = 0; j < omghat[0].size(); j++) {
+            cout << "[i]=" << i << " ";
+            cout << "[j]=" << j << "\n";
+            cout << omghat[i][j] << "\n";
+        }
+    }
 
     cout << "Simulation is finished\n";
     

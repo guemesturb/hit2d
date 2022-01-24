@@ -10,7 +10,8 @@ all: $(CPU_OBJECTS)
 	$(CC) -o channel.bin $(CPU_OBJECTS)
 
 $(CPU_OBJECTS): src/%.o: src/%.cpp
-	$(CC) -c $(SIZE) $< -o $@
+	# $(CC) -c $(SIZE) $< -o $@
+	$(CC) -c $< -o $@
 
 clean:
 	rm src/*.o channel.bin

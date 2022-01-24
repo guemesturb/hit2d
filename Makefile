@@ -1,17 +1,17 @@
-CC = g++ -std=c++11
+CC = g++ -std=c++17
 CPU_SOURCES = $(wildcard src/*.cpp)
 CPU_OBJECTS = $(CPU_SOURCES:.cpp=.o)
+DEBUG = -v
 
 NX:= $(shell python readconf.py NX)
 NY:= $(shell python readconf.py NY)
 SIZE = -DNX=${NX} -DNY=${NY}
 
 all: $(CPU_OBJECTS)
-	$(CC) -o channel.bin $(CPU_OBJECTS)
+	$(CC) -o channel $(CPU_OBJECTS) $(DEBUG)
 
 $(CPU_OBJECTS): src/%.o: src/%.cpp
-	# $(CC) -c $(SIZE) $< -o $@
-	$(CC) -c $< -o $@
+	$(CC) -c $< -o $@ 
 
 clean:
-	rm src/*.o channel.bin
+	rm src/*.o channel

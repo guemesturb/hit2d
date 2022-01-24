@@ -45,13 +45,13 @@ int main(int argc, char **argv) {
 
     vector<vector<double>> omghat = initialConditions();
 
-    for (size_t i = 0; i < omghat.size(); i++) {
-        for (size_t j = 0; j < omghat[0].size(); j++) {
-            cout << "[i]=" << i << " ";
-            cout << "[j]=" << j << "\n";
-            cout << omghat[i][j] << "\n";
-        }
-    }
+    // for (size_t i = 0; i < omghat.size(); i++) {
+    //     for (size_t j = 0; j < omghat[0].size(); j++) {
+    //         cout << "[i]=" << i << " ";
+    //         cout << "[j]=" << j << "\n";
+    //         cout << omghat[i][j] << "\n";
+    //     }
+    // }
 
     cout << "Simulation is finished\n";
     

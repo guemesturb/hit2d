@@ -6,6 +6,9 @@ using namespace std;
 
 #define PI 3.14159265f
 
+extern int LX;
+extern int LY;
+
 vector<double> createWaveLength(int, int);
 vector<double> linspace(int, int, int);
 vector<vector<double>> initialConditions();

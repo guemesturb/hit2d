@@ -4,7 +4,8 @@ vector<vector<double>> initialConditions(){
 
     // vector<vector<double>> omghat(3 , vector<double> (3, 0));
 
-    vector<vector<double>> omghat = taylorVortex(3, 3, 3, 3);
+    vector<vector<double>> omghat = taylorVortex(LX/2, LY/2, LX/8, 1);
+    // vector<vector<double>> omghat = taylorVortex(2, 2, 8, 1);
 
     return omghat;
 }

@@ -2,23 +2,30 @@
 
 vector<vector<double>> initialConditions(){
 
-    // vector<vector<double>> omghat(3 , vector<double> (3, 0));
+    // Case 1
+    // vector<vector<double>> omghat = taylorVortex(float(LX)/2.0, float(LY)/2.0, float(LX)/8.0, 1.0);
+    // Case 2
+    vector<vector<double>> omghat1 = taylorVortex(float(LX)/2.0, float(LY)*0.4, float(LX)/10.0, 1.0);
+    vector<vector<double>> omghat2 = taylorVortex(float(LX)/2.0, float(LY)*0.6, float(LX)/10.0, 1.0);
 
-    vector<vector<double>> omghat = taylorVortex(LX/2, LY/2, LX/8, 1);
-    // vector<vector<double>> omghat = taylorVortex(2, 2, 8, 1);
-
+    vector<vector<double>> omghat = sumMatrices(omghat1, omghat2);
     return omghat;
 }
 
-vector<vector<double>> taylorVortex(int x0, int y0, int a0, int Umax){
+vector<vector<double>> taylorVortex(float x0, float y0, float a0, float Umax){
 
-    vector<vector<double>> omg(3 , vector<double> (3, 0));
-    vector<vector<double>> omghat(3 , vector<double> (3, 0));
-    vector<vector<double>> r2(3 , vector<double> (3, 1));
+    vector<vector<double>> omg(NY, vector<double> (NX, 0));
+    vector<vector<double>> omghat(NY , vector<double> (NX, 0));
+    vector<vector<double>> r2(NY , vector<double> (NX, 0));
 
-    for (int i=0; i<=1; i++) {
-        for (int j=0; j<=1; j++) {
-            omg = sumMatrices(omg, r2);
+    for (int i=-1; i<=1; i++) {
+        for (int j=-1; j<=1; j++) {
+            for (int ig=0; ig<NY; ig++) {
+                for (int jg=0; jg<NX; jg++) {
+                    r2[ig][jg] = pow(grid.XX[ig][jg] - x0 - double(i)*double(LX), 2.0) + pow(grid.YY[ig][jg] - y0 - double(j)*double(LY), 2.0);
+                    omg[ig][jg] = omg[ig][jg] + Umax/a0*(2.0-r2[ig][jg]/pow(a0,2.0))*exp(0.5*(1.0-r2[ig][jg]/pow(a0,2.0)));
+                }
+            }
         }
     }
     

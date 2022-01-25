@@ -2,10 +2,14 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
 #define PI 3.14159265f
+
+
 
 struct grid_t{
   vector<vector<double>> XX;

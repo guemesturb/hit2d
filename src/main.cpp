@@ -7,7 +7,6 @@ int NX;
 int NY;
 grid_t grid;
 
-
 int main(int argc, char **argv) {
     
     // Domain size

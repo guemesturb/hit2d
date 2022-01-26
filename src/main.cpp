@@ -5,6 +5,7 @@ int LX; // Simulation-box size in the X direction
 int LY; // Simulation-box size in the Y direction
 int NX;
 int NY;
+int IC;
 grid_t grid;
 
 int main(int argc, char **argv) {
@@ -17,6 +18,10 @@ int main(int argc, char **argv) {
     NY = 128; // Number of grid points in the Y direction
     float dx = float(LX) / float(NX);
     float dy = float(LY) / float(NY);
+
+    // Initial conditions
+
+    IC = 3;
 
     // Dealiasing
 

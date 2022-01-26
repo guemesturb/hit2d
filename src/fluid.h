@@ -20,6 +20,7 @@ extern int NX;
 extern int NY;
 extern int LX;
 extern int LY;
+extern int IC;
 extern grid_t grid;
 
 vector<double> createWaveLength(int, int);

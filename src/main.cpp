@@ -57,6 +57,7 @@ int main(int argc, char **argv) {
     grid = meshGrid(vector<double>(x.begin(), x.end() - 1), vector<double>(y.begin(), y.end() - 1));
 
     vector<vector<complex<double>>> omegaHat = initialConditions();
+    vector<vector<double>> omega = applyIFFT2(omegaHat);
 
 
     // for (size_t i = 0; i < grid.XX.size(); i++) {
@@ -68,12 +69,23 @@ int main(int argc, char **argv) {
     //     }
     // }
 
-    ofstream output_file("test.txt");
+    ofstream output_file("omegaHat.txt");
     for (size_t i = 0; i < omegaHat.size(); i++)
     {
         for (size_t j = 0; j < omegaHat[0].size(); j++) {
             // output_file << omegaHat[i][j].real() << endl; 
             output_file << omegaHat[i][j].real() << "+" << omegaHat[i][j].imag() << "j\n";
+        }
+    }
+    output_file.close();
+    output_file.clear();
+
+    output_file.open("omega.txt");
+    for (size_t i = 0; i < omega.size(); i++)
+    {
+        for (size_t j = 0; j < omega[0].size(); j++) {
+            // output_file << omegaHat[i][j].real() << endl; 
+            output_file << omega[i][j] << "\n";
         }
     }
     // ostream_iterator<int> output_iterator(output_file, "\n");

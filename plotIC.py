@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 def main():
 
-    omega = np.reshape(np.loadtxt('test.txt'), (NY, NX))
+    omega = np.reshape(np.loadtxt('omega.txt'), (NY, NX))
 
     plt.contourf(
         omega, 

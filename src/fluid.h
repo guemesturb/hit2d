@@ -38,3 +38,4 @@ vector<vector<double>> sumMatrices(vector<vector<double>>, vector<vector<double>
 vector<vector<complex<double>>> sumComplexMatrices(vector<vector<complex<double>>>, vector<vector<complex<double>>>);
 grid_t meshGrid(vector<double>, vector<double>);
 vector<vector<complex<double>>> applyFFT2(vector<vector<double>>);
+vector<vector<double>> applyIFFT2(vector<vector<complex<double>>>);

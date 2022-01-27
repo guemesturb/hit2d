@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
 
     grid = meshGrid(vector<double>(x.begin(), x.end() - 1), vector<double>(y.begin(), y.end() - 1));
 
-    vector<vector<double>> omegaHat = initialConditions();
+    vector<vector<complex<double>>> omegaHat = initialConditions();
 
 
     // for (size_t i = 0; i < grid.XX.size(); i++) {
@@ -72,7 +72,8 @@ int main(int argc, char **argv) {
     for (size_t i = 0; i < omegaHat.size(); i++)
     {
         for (size_t j = 0; j < omegaHat[0].size(); j++) {
-            output_file << omegaHat[i][j] << endl; 
+            // output_file << omegaHat[i][j].real() << endl; 
+            output_file << omegaHat[i][j].real() << "+" << omegaHat[i][j].imag() << "j\n";
         }
     }
     // ostream_iterator<int> output_iterator(output_file, "\n");
@@ -82,7 +83,7 @@ int main(int argc, char **argv) {
     //     for (size_t j = 0; j < omegaHat[0].size(); j++) {
     //         cout << "[i]=" << i << " ";
     //         cout << "[j]=" << j << "\n";
-    //         cout << omegaHat[i][j] << "\n";
+    //         cout << omegaHat[i][j].real() << "\n";
     //     }
     // }
 

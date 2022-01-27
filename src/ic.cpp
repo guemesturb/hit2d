@@ -1,32 +1,32 @@
 #include "fluid.h"
 
-vector<vector<double>> initialConditions(){
+vector<vector<complex<double>>> initialConditions(){
 
-    vector<vector<double>> omghat;
+    vector<vector<complex<double>>> omghat;
 
     // Case 1
     if (IC == 1){
         omghat = taylorVortex(float(LX)/2.0, float(LY)/2.0, float(LX)/8.0, 1.0);
     } 
     else if (IC == 2){
-         omghat = sumMatrices(taylorVortex(float(LX)/2.0, float(LY)*0.4, float(LX)/10.0, 1.0), taylorVortex(float(LX)/2.0, float(LY)*0.6, float(LX)/10.0, 1.0));
+         omghat = sumComplexMatrices(taylorVortex(float(LX)/2.0, float(LY)*0.4, float(LX)/10.0, 1.0), taylorVortex(float(LX)/2.0, float(LY)*0.6, float(LX)/10.0, 1.0));
     }
     else if (IC == 3){
         int nv = 100;
         srand((unsigned int)time(NULL));
          omghat = taylorVortex(float(LX) * float(rand()) / float(RAND_MAX), float(LY) * float(rand()) / float(RAND_MAX), float(LX)/20.0, float(rand()) / float(RAND_MAX) * 2.0 - 1.0);
         for (int i=0; i<nv; i++){
-            omghat = sumMatrices(omghat, taylorVortex(float(LX) * float(rand()) / float(RAND_MAX), float(LY) * float(rand()) / float(RAND_MAX), float(LX)/20.0, float(rand()) / float(RAND_MAX) * 2.0 - 1.0));
+            omghat = sumComplexMatrices(omghat, taylorVortex(float(LX) * float(rand()) / float(RAND_MAX), float(LY) * float(rand()) / float(RAND_MAX), float(LX)/20.0, float(rand()) / float(RAND_MAX) * 2.0 - 1.0));
         }
     }
 
     return omghat;
 }
 
-vector<vector<double>> taylorVortex(float x0, float y0, float a0, float Umax){
+vector<vector<complex<double>>> taylorVortex(float x0, float y0, float a0, float Umax){
 
     vector<vector<double>> omg(NY, vector<double> (NX, 0));
-    vector<vector<double>> omghat(NY , vector<double> (NX, 0));
+    vector<vector<complex<double>>> omghat(NY , vector<complex<double>> (NX, 0));
     vector<vector<double>> r2(NY , vector<double> (NX, 0));
 
     for (int i=-1; i<=1; i++) {
@@ -40,7 +40,7 @@ vector<vector<double>> taylorVortex(float x0, float y0, float a0, float Umax){
         }
     }
     
-    omghat = omg;
+    omghat = applyFFT2(omg);
 
     return omghat;
 }

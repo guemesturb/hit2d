@@ -41,6 +41,19 @@ vector<vector<double>> sumMatrices(vector<vector<double>> A, vector<vector<doubl
     return C;
 }
 
+vector<vector<complex<double>>> sumComplexMatrices(vector<vector<complex<double>>> A, vector<vector<complex<double>>> B){
+
+    vector<vector<complex<double>>> C(A.size() , vector<complex<double>> (A[0].size(), 0));
+
+    for(size_t i = 0; i < A.size(); i++){
+        for(size_t j = 0; j < A[0].size(); j++){
+            C[i][j] = A[i][j] + B[i][j];
+        }
+    }
+
+    return C;
+}
+
 grid_t meshGrid(vector<double> X, vector<double> Y){
 
     vector<vector<double>> XX(Y.size() , vector<double> (Y.size(), 0));

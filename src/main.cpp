@@ -1,16 +1,27 @@
 #include "fluid.h"
 
 
+int LX; // Simulation-box size in the X direction
+int LY; // Simulation-box size in the Y direction
+int NX;
+int NY;
+int IC;
+grid_t grid;
+
 int main(int argc, char **argv) {
     
     // Domain size
     
-    int LX = 1; // Simulation-box size in the X direction
-    int LY = 1; // Simulation-box size in the Y direction
-    int NX = 128; // Number of grid points in the X direction
-    int NY = 128; // Number of grid points in the Y direction
+    LX = 1; // Simulation-box size in the X direction
+    LY = 2; // Simulation-box size in the Y direction
+    NX = 128; // Number of grid points in the X direction
+    NY = 128; // Number of grid points in the Y direction
     float dx = float(LX) / float(NX);
     float dy = float(LY) / float(NY);
+
+    // Initial conditions
+
+    IC = 3;
 
     // Dealiasing
 
@@ -40,9 +51,40 @@ int main(int argc, char **argv) {
 
     vector<double> x = linspace(0, LX, NX + 1);
     vector<double> y = linspace(0, LY, NY + 1);
+    
+    // Initial conditions
 
-    // for (size_t i = 0; i < x.size(); i++) {
-    //     cout << x[i] << "\n";
+    grid = meshGrid(vector<double>(x.begin(), x.end() - 1), vector<double>(y.begin(), y.end() - 1));
+
+    vector<vector<complex<double>>> omegaHat = initialConditions();
+
+
+    // for (size_t i = 0; i < grid.XX.size(); i++) {
+    //     for (size_t j = 0; j < grid.XX[0].size(); j++) {
+    //         cout << "[i]=" << i << " ";
+    //         cout << "[j]=" << j << "\n";
+    //         cout << grid.XX[i][j] << "\n";
+    //         cout << grid.YY[i][j] << "\n";
+    //     }
+    // }
+
+    ofstream output_file("test.txt");
+    for (size_t i = 0; i < omegaHat.size(); i++)
+    {
+        for (size_t j = 0; j < omegaHat[0].size(); j++) {
+            // output_file << omegaHat[i][j].real() << endl; 
+            output_file << omegaHat[i][j].real() << "+" << omegaHat[i][j].imag() << "j\n";
+        }
+    }
+    // ostream_iterator<int> output_iterator(output_file, "\n");
+    // copy( omegaHat.begin( ), omegaHat.end( ), output_iterator );
+
+    // for (size_t i = 0; i < omegaHat.size(); i++) {
+    //     for (size_t j = 0; j < omegaHat[0].size(); j++) {
+    //         cout << "[i]=" << i << " ";
+    //         cout << "[j]=" << j << "\n";
+    //         cout << omegaHat[i][j].real() << "\n";
+    //     }
     // }
 
     cout << "Simulation is finished\n";

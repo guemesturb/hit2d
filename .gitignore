@@ -1,3 +1,6 @@
+.env/
+.vscode/
+*.txt
 *.bin
 *.o
-.vscode/
+*.png

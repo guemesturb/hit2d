@@ -4,26 +4,26 @@ vector<vector<complex<double>>> initialConditions(){
 
     vector<vector<complex<double>>> omghat;
 
-    // Case 1
     if (IC == 1){
-        omghat = taylorVortex(float(LX)/2.0, float(LY)/2.0, float(LX)/8.0, 1.0);
+        omghat = taylorVortex(double(LX)/2.0, double(LY)/2.0, double(LX)/8.0, 1.0);
     } 
     else if (IC == 2){
-         omghat = sumComplexMatrices(taylorVortex(float(LX)/2.0, float(LY)*0.4, float(LX)/10.0, 1.0), taylorVortex(float(LX)/2.0, float(LY)*0.6, float(LX)/10.0, 1.0));
+         omghat = sumComplexMatrices(taylorVortex(double(LX)/2.0, double(LY)*0.4, double(LX)/10.0, 1.0), taylorVortex(double(LX)/2.0, double(LY)*0.6, double(LX)/10.0, 1.0));
     }
     else if (IC == 3){
         int nv = 100;
         srand((unsigned int)time(NULL));
-         omghat = taylorVortex(float(LX) * float(rand()) / float(RAND_MAX), float(LY) * float(rand()) / float(RAND_MAX), float(LX)/20.0, float(rand()) / float(RAND_MAX) * 2.0 - 1.0);
+        omghat = taylorVortex(double(LX) * double(rand()) / double(RAND_MAX), double(LY) * double(rand()) / double(RAND_MAX), double(LX)/20.0, double(rand()) / double(RAND_MAX) * 2.0 - 1.0);
         for (int i=0; i<nv; i++){
-            omghat = sumComplexMatrices(omghat, taylorVortex(float(LX) * float(rand()) / float(RAND_MAX), float(LY) * float(rand()) / float(RAND_MAX), float(LX)/20.0, float(rand()) / float(RAND_MAX) * 2.0 - 1.0));
+            omghat = sumComplexMatrices(omghat, taylorVortex(double(LX) * double(rand()) / double(RAND_MAX), double(LY) * double(rand()) / double(RAND_MAX), double(LX)/20.0, double(rand()) / double(RAND_MAX) * 2.0 - 1.0));
         }
     }
 
     return omghat;
 }
 
-vector<vector<complex<double>>> taylorVortex(float x0, float y0, float a0, float Umax){
+
+vector<vector<complex<double>>> taylorVortex(double x0, double y0, double a0, double Umax){
 
     vector<vector<double>> omg(NY, vector<double> (NX, 0));
     vector<vector<complex<double>>> omghat(NY , vector<complex<double>> (NX, 0));
@@ -44,12 +44,3 @@ vector<vector<complex<double>>> taylorVortex(float x0, float y0, float a0, float
 
     return omghat;
 }
-
-// omg = zeros(size(xx));
-// for i = -1:1
-//     for j = -1:1 % making sure to add periodic images
-//         r2  = (xx-x0-i*Lx).^2 + (yy-y0-j*Ly).^2;
-//         omg = omg + Umax/a0*(2-r2/a0^2).*exp(0.5*(1-r2/a0^2));
-//     end
-// end
-// omghat = fft2(omg);

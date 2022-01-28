@@ -73,3 +73,38 @@ grid_t meshGrid(vector<double> X, vector<double> Y){
 
     return tmp_grid;
 }
+
+
+velocity_t omega2velocity(vector<vector<complex<double>>> omegaHat){
+    
+    vector<vector<complex<double>>> uHat(omegaHat.size(), vector<complex<double>> (omegaHat[0].size(), 0));
+    vector<vector<complex<double>>> vHat(omegaHat.size(), vector<complex<double>> (omegaHat[0].size(), 0));
+    vector<vector<complex<double>>> psiHat(omegaHat.size(), vector<complex<double>> (omegaHat[0].size(), 0));
+    vector<vector<complex<double>>> omega(omegaHat.size(), vector<complex<double>> (omegaHat[0].size(), 0));
+
+    omega = applyIFFT2(omegaHat);
+
+    for (int i=0; i<NX; i++){
+        for (int j=0; j<NY; j++){
+            if ((i+1)*(j+1)==1){
+                psiHat[j][i] = 0.0;
+            }
+            else {
+                psiHat[j][i] = omegaHat[j][i]/(pow(kx[i],2.0)+pow(ky[j],2.0));
+            }
+        }
+    }
+    for (int i=0; i<NX; i++){
+        for (int j=0; j<NY; j++){
+            uHat[j][i] =  1i*ky[j]*psiHat[j][i];
+            vHat[j][i] = -1i*kx[i]*psiHat[j][i];
+        }
+    }
+
+    velocity_t velocity;
+
+    velocity.u = applyIFFT2(uHat);
+    velocity.v = applyIFFT2(vHat);
+
+    return velocity;
+}

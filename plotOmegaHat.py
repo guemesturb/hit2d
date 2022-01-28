@@ -7,14 +7,12 @@ def main():
     def transform_complex(line):
         return line.replace(b'+-',b'-')
 
-    with open('test.txt', 'rb') as f:
+    with open('omegaHat.txt', 'rb') as f:
         lines = map(transform_complex, f)
         omegaHat = np.reshape(np.loadtxt(lines, dtype=np.complex128), (NY, NX))
 
-    # omegaHat = np.reshape(np.loadtxt('test.txt', converters={0: lambda x: x.replace('+-','-')}), (NY, NX))
-
     plt.pcolor(
-        np.abs(omegaHat[32:-32,32:-32]), 
+        np.abs(omegaHat), 
         cmap='magma'
     )
     

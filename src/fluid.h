@@ -24,6 +24,10 @@ struct complex_t{
   vector<vector<double>> real;
   vector<vector<double>> imag;
 };
+struct velocity_t{
+  vector<vector<complex<double>>> u;
+  vector<vector<complex<double>>> v;
+};
 
 extern int NX;
 extern int NY;
@@ -57,3 +61,5 @@ vector<vector<complex<double>>> rhs(vector<vector<complex<double>>>);
 vector<vector<complex<double>>> advection(vector<vector<complex<double>>>);
 vector<vector<complex<double>>> pad(vector<vector<complex<double>>>);
 vector<vector<complex<double>>> chop(vector<vector<complex<double>>>);
+
+velocity_t omega2velocity(vector<vector<complex<double>>>);

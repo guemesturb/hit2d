@@ -57,16 +57,57 @@ int main(int argc, char **argv) {
     vector<double> x = linspace(0, LX, NX + 1);
     vector<double> y = linspace(0, LY, NY + 1);
     
+
     // Initial conditions
 
     grid = meshGrid(vector<double>(x.begin(), x.end() - 1), vector<double>(y.begin(), y.end() - 1));
 
     vector<vector<complex<double>>> omegaHat = initialConditions();
 
+    vector<vector<complex<double>>> omega = applyIFFT2(omegaHat);
+
+    // Compute Reynolds
+
+    velocity_t velocity = omega2velocity(omegaHat);
+
+    // complex<double> ustar;
+
+    double ustar;
+    double lstar;
+    double u2;
+    double w2;
+
+    for (int i=0; i<NX; i++) {
+        for (int j=0; j<NY; j++) {
+            ustar += pow(velocity.u[j][i].real(), 2.0) + pow(velocity.v[j][i].real(), 2.0);
+        }
+    }
+
+    ustar = pow(ustar / NX / NY, 0.5);
+
+    for (int i=0; i<NX; i++) {
+        for (int j=0; j<NY; j++) {
+            u2 += pow(velocity.u[j][i].real(), 2.0) + pow(velocity.v[j][i].real(), 2.0);
+            w2 += pow(omega[j][i].real(), 2.0);
+        }
+    }
+
+    u2 = u2 / NX / NY;
+    w2 = w2 / NX / NY;
+
+    lstar = pow(u2/w2, 0.5);
+
+    double Re = ustar * lstar / nu;
+
+    cout << ustar << endl;
+    cout << lstar << endl;
+    cout << Re << endl;
+
     // Run Navier-Stokes
 
     for (int i=0; i<nt; i++){
         cout << "Iteration " << i << endl;
+        cout << omegaHat[5][2] << endl;
         omegaHat = rk4(omegaHat, dt);
     }
 
@@ -80,7 +121,7 @@ int main(int argc, char **argv) {
     output_file.close();
     output_file.clear();
 
-    vector<vector<complex<double>>> omega = applyIFFT2(omegaHat);
+    omega = applyIFFT2(omegaHat);
 
     output_file.open("omega.txt");
     for (size_t i = 0; i < omega.size(); i++) {

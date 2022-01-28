@@ -10,6 +10,8 @@ vector<vector<complex<double>>> applyFFT2(vector<vector<double>> A){
     fftw_plan p;
     in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * A.size()*A[0].size());
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * A.size()*A[0].size());
+    
+    p = fftw_plan_dft_2d(A.size(), A[0].size(), in, out, FFTW_FORWARD, FFTW_MEASURE);
 
     for(size_t i = 0; i < A.size(); i++){
         for(size_t j = 0; j < A[0].size(); j++){
@@ -17,8 +19,6 @@ vector<vector<complex<double>>> applyFFT2(vector<vector<double>> A){
             in[i*A.size()+j][1]=0.0;
         }
     }
-    
-    p = fftw_plan_dft_2d(NX, NY, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
     fftw_execute(p); 
 
     for(size_t i = 0; i < A.size(); i++){
@@ -40,22 +40,19 @@ vector<vector<complex<double>>> applyFFT2Complex(vector<vector<complex<double>>>
     
     vector<vector<complex<double>>> output(A.size() , vector<complex<double>> (A.size(), 0));
 
-
     fftw_complex *in;
     fftw_complex *out;
     fftw_plan p;
     in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * A.size()*A[0].size());
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * A.size()*A[0].size());
-
+    
+    p = fftw_plan_dft_2d(A.size(), A[0].size(), in, out, FFTW_FORWARD, FFTW_MEASURE);
     for(size_t i = 0; i < A.size(); i++){
         for(size_t j = 0; j < A[0].size(); j++){
             in[i*A.size()+j][0]=A[i][j].real();
             in[i*A.size()+j][1]=A[i][j].imag();
         }
     }
-    
-    
-    p = fftw_plan_dft_2d(NX, NY, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
     fftw_execute(p); 
 
     for(size_t i = 0; i < A.size(); i++){
@@ -85,20 +82,19 @@ vector<vector<complex<double>>> applyIFFT2(vector<vector<complex<double>>> A){
     in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * A.size()*A[0].size());
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * A.size()*A[0].size());
 
+    
+    p = fftw_plan_dft_2d(A.size(), A[0].size(), in, out, FFTW_BACKWARD, FFTW_MEASURE);
     for(size_t i = 0; i < A.size(); i++){
         for(size_t j = 0; j < A[0].size(); j++){
             in[i*A.size()+j][0]=A[i][j].real();
             in[i*A.size()+j][1]=A[i][j].imag();
         }
     }
-    
-    p = fftw_plan_dft_2d(NX, NY, in, out, FFTW_BACKWARD, FFTW_PATIENT);
     fftw_execute(p); 
-
+    
     for(size_t i = 0; i < A.size(); i++){
         for(size_t j = 0; j < A[0].size(); j++){
-            complex<double> temp(out[i*A.size()+j][0], out[i*A.size()+j][1]);
-            output[i][j] = temp.real() / NX / NY + temp.imag() / NX / NY;
+            output[i][j] = out[i*A.size()+j][0] / A.size() / A[0].size() + out[i*A.size()+j][1] / A.size() / A[0].size();
         }
     }
     

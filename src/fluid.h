@@ -6,6 +6,7 @@
 #include <ctime>
 #include <complex> 
 #include <fftw3.h>
+// #include <cstdio>
 
 using namespace std;
 
@@ -63,3 +64,5 @@ vector<vector<complex<double>>> pad(vector<vector<complex<double>>>);
 vector<vector<complex<double>>> chop(vector<vector<complex<double>>>);
 
 velocity_t omega2velocity(vector<vector<complex<double>>>);
+
+void saveData(vector<vector<complex<double>>>, double);

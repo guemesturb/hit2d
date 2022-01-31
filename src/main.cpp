@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
     double tmax = 0.5;
     double tout = 0.1;
     double nt = ceil(tmax/dt);
-    int nout = ceil(tout/dt);
+    int frecS = 4;
 
     // Fourier wavelengths
 
@@ -99,34 +99,20 @@ int main(int argc, char **argv) {
 
     double Re = ustar * lstar / nu;
 
-    cout << ustar << endl;
-    cout << lstar << endl;
-    cout << Re << endl;
+    // cout << ustar << endl;
+    // cout << lstar << endl;
+    // cout << Re << endl;
 
     // Run Navier-Stokes
 
+    double timeSimulation = 0.0;
+
     for (int i=0; i<nt; i++){
         cout << "Iteration " << i << endl;
-        cout << omegaHat[5][2] << endl;
         omegaHat = rk4(omegaHat, dt);
-    }
-
-
-    ofstream output_file("omegaHat.txt");
-    for (size_t i = 0; i < omegaHat.size(); i++) {
-        for (size_t j = 0; j < omegaHat[0].size(); j++) {
-            output_file << omegaHat[i][j].real() << "+" << omegaHat[i][j].imag() << "j\n";
-        }
-    }
-    output_file.close();
-    output_file.clear();
-
-    omega = applyIFFT2(omegaHat);
-
-    output_file.open("omega.txt");
-    for (size_t i = 0; i < omega.size(); i++) {
-        for (size_t j = 0; j < omega[0].size(); j++) {
-            output_file << omega[i][j].real() << "\n";
+        timeSimulation += dt;
+        if (i % frecS == 0){
+            saveData(omegaHat, timeSimulation);
         }
     }
 

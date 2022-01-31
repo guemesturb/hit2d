@@ -74,7 +74,6 @@ grid_t meshGrid(vector<double> X, vector<double> Y){
     return tmp_grid;
 }
 
-
 velocity_t omega2velocity(vector<vector<complex<double>>> omegaHat){
     
     vector<vector<complex<double>>> uHat(omegaHat.size(), vector<complex<double>> (omegaHat[0].size(), 0));
@@ -108,3 +107,42 @@ velocity_t omega2velocity(vector<vector<complex<double>>> omegaHat){
 
     return velocity;
 }
+
+void computeReynolds(vector<vector<complex<double>>> omegaHat){
+    
+    vector<vector<complex<double>>> omega = applyIFFT2(omegaHat);
+
+    // Compute Reynolds
+
+    velocity_t velocity = omega2velocity(omegaHat);
+
+    // complex<double> ustar;
+
+    double ustar;
+    double lstar;
+    double u2;
+    double w2;
+
+    for (int i=0; i<NX; i++) {
+        for (int j=0; j<NY; j++) {
+            ustar += pow(velocity.u[j][i].real(), 2.0) + pow(velocity.v[j][i].real(), 2.0);
+        }
+    }
+
+    ustar = pow(ustar / NX / NY, 0.5);
+
+    for (int i=0; i<NX; i++) {
+        for (int j=0; j<NY; j++) {
+            u2 += pow(velocity.u[j][i].real(), 2.0) + pow(velocity.v[j][i].real(), 2.0);
+            w2 += pow(omega[j][i].real(), 2.0);
+        }
+    }
+
+    u2 = u2 / NX / NY;
+    w2 = w2 / NX / NY;
+
+    lstar = pow(u2/w2, 0.5);
+
+    double Re = ustar * lstar / nu;
+}
+

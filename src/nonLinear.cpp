@@ -1,40 +1,40 @@
 #include "fluid.h"
 
 
-vector<vector<complex<double>>> rk4(vector<vector<complex<double>>> f, double dt) {
+void rk4(vector<vector<complex<double>>>* f, double dt) {
 
-    vector<vector<complex<double>>>   k1(f.size() , vector<complex<double>> (f[0].size(), 0));
-    vector<vector<complex<double>>>   k2(f.size() , vector<complex<double>> (f[0].size(), 0));
-    vector<vector<complex<double>>>   k3(f.size() , vector<complex<double>> (f[0].size(), 0));
-    vector<vector<complex<double>>>   k4(f.size() , vector<complex<double>> (f[0].size(), 0));
-    vector<vector<complex<double>>> fnew(f.size() , vector<complex<double>> (f[0].size(), 0));
+    vector<vector<complex<double>>>   k1((*f).size() , vector<complex<double>> ((*f)[0].size(), 0));
+    vector<vector<complex<double>>>   k2((*f).size() , vector<complex<double>> ((*f)[0].size(), 0));
+    vector<vector<complex<double>>>   k3((*f).size() , vector<complex<double>> ((*f)[0].size(), 0));
+    vector<vector<complex<double>>>   k4((*f).size() , vector<complex<double>> ((*f)[0].size(), 0));
+    // vector<vector<complex<double>>> fnew(f.size() , vector<complex<double>> (f[0].size(), 0));
     
-    k1 = rhs(f);
+    k1 = rhs(*f);
     for (int i=0; i<NX; i++){
         for (int j=0; j<NY; j++){
-            k2[j][i] = f[j][i] + 0.5 * dt * k1[j][i];
+            k2[j][i] = (*f)[j][i] + 0.5 * dt * k1[j][i];
         }
     }
     k2 = rhs(k2);
     for (int i=0; i<NX; i++){
         for (int j=0; j<NY; j++){
-            k3[j][i] = f[j][i] + 0.5 * dt * k2[j][i];
+            k3[j][i] = (*f)[j][i] + 0.5 * dt * k2[j][i];
         }
     }
     k3 = rhs(k3);
     for (int i=0; i<NX; i++){
         for (int j=0; j<NY; j++){
-            k4[j][i] = f[j][i] + dt * k3[j][i];
+            k4[j][i] = (*f)[j][i] + dt * k3[j][i];
         }
     }
     k4 = rhs(k4);
     for (int i=0; i<NX; i++){
         for (int j=0; j<NY; j++){
-            fnew[j][i] = f[j][i] + dt / 6.0 * (k1[j][i] + 2.0 * (k2[j][i] + k3[j][i]) + k4[j][i]);
+            (*f)[j][i] = (*f)[j][i] + dt / 6.0 * (k1[j][i] + 2.0 * (k2[j][i] + k3[j][i]) + k4[j][i]);
         }
     }
 
-    return fnew;
+    // return fnew;
 }
 
 

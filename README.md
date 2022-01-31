@@ -1,5 +1,3 @@
-# Fluid Mechanics
+# Two-dimensional homogeneous isotropic turbulence
 
-Repository to learn C++ while implementing a direct numerical simulations of turbulent flows
-
-- Two-dimensional homogeneous isotropic turbulence
+Vorticity-strewamfunction formulation of Navier-Stokes equatios to simulate two-dimensional homogeneous isotropic turbulence.

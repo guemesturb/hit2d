@@ -57,7 +57,7 @@ vector<vector<complex<double>>> applyFFT2(vector<vector<double>>);
 vector<vector<complex<double>>> applyIFFT2(vector<vector<complex<double>>>);
 vector<vector<complex<double>>> applyFFT2Complex(vector<vector<complex<double>>>);
 
-vector<vector<complex<double>>> rk4(vector<vector<complex<double>>>, double);
+void rk4(vector<vector<complex<double>>>*, double);
 vector<vector<complex<double>>> rhs(vector<vector<complex<double>>>);
 vector<vector<complex<double>>> advection(vector<vector<complex<double>>>);
 vector<vector<complex<double>>> pad(vector<vector<complex<double>>>);
@@ -66,3 +66,4 @@ vector<vector<complex<double>>> chop(vector<vector<complex<double>>>);
 velocity_t omega2velocity(vector<vector<complex<double>>>);
 
 void saveData(vector<vector<complex<double>>>, double);
+void computeReynolds(vector<vector<complex<double>>>);

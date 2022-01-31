@@ -64,52 +64,13 @@ int main(int argc, char **argv) {
 
     vector<vector<complex<double>>> omegaHat = initialConditions();
 
-    vector<vector<complex<double>>> omega = applyIFFT2(omegaHat);
-
-    // Compute Reynolds
-
-    velocity_t velocity = omega2velocity(omegaHat);
-
-    // complex<double> ustar;
-
-    double ustar;
-    double lstar;
-    double u2;
-    double w2;
-
-    for (int i=0; i<NX; i++) {
-        for (int j=0; j<NY; j++) {
-            ustar += pow(velocity.u[j][i].real(), 2.0) + pow(velocity.v[j][i].real(), 2.0);
-        }
-    }
-
-    ustar = pow(ustar / NX / NY, 0.5);
-
-    for (int i=0; i<NX; i++) {
-        for (int j=0; j<NY; j++) {
-            u2 += pow(velocity.u[j][i].real(), 2.0) + pow(velocity.v[j][i].real(), 2.0);
-            w2 += pow(omega[j][i].real(), 2.0);
-        }
-    }
-
-    u2 = u2 / NX / NY;
-    w2 = w2 / NX / NY;
-
-    lstar = pow(u2/w2, 0.5);
-
-    double Re = ustar * lstar / nu;
-
-    // cout << ustar << endl;
-    // cout << lstar << endl;
-    // cout << Re << endl;
-
     // Run Navier-Stokes
 
     double timeSimulation = 0.0;
 
     for (int i=0; i<nt; i++){
         cout << "Iteration " << i << endl;
-        omegaHat = rk4(omegaHat, dt);
+        rk4(&omegaHat, dt);
         timeSimulation += dt;
         if (i % frecS == 0){
             saveData(omegaHat, timeSimulation);
